@@ -1,4 +1,12 @@
 {
   "type": "module",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/nav3d.test.mjs",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^15.18.0"
+  }
 }

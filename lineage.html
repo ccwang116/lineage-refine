@@ -801,6 +801,7 @@ canvas{display:block;}
             'hammer-target': hammerMode.active && slot && slot.type===hammerMode.target && slot.enhance<maxEnhLevel
           }"
           :title="hammerMode.active && slot && slot.type===hammerMode.target ? '🔨 點擊強化 '+slot.name : ''"
+          :data-testid="slot ? 'inv-' + slot.name : undefined"
           @click="onSlotClick(i)">
           <template v-if="slot">
             <img v-if="slot.svgIcon" :src="slot.svgIcon" :width="slot.enhance>0?31:38" :height="slot.enhance>0?31:38" style="image-rendering:crisp-edges;display:block;"/>
@@ -1383,7 +1384,7 @@ createApp({
           inventory.value[equipIdx]={...it,enhance:newLv};
           showResult('success',
             `你的<span style="color:var(--gold2)">【${itemName}】</span>已成功` +
-            `<b style="color:var(--gold2)"> +${newLv}</b>` +
+            `<b style="color:var(--gold2)" data-testid="result-enhance-level"> +${newLv}</b>` +
             (jump===2
               ? `<br><span style="color:#44ffaa">✦ 祝福加持，一口氣躍升 +2！</span>`
               : `<br><span style="color:var(--gold)">精煉 +1 成功</span>`)
@@ -1393,7 +1394,7 @@ createApp({
           const newLv=Math.min(maxEnhLevel.value,oldLv+1);
           inventory.value[equipIdx]={...it,enhance:newLv};
           showResult('success',
-            `你的<span style="color:var(--gold2)">【${itemName}】</span>已成功<b style="color:var(--gold2)"> +${newLv}</b>`
+            `你的<span style="color:var(--gold2)">【${itemName}】</span>已成功<b style="color:var(--gold2)" data-testid="result-enhance-level"> +${newLv}</b>`
           );
           addMsg(`✨ 精煉成功！${itemName} → +${newLv}`,'gold');
         }
@@ -1494,6 +1495,7 @@ createApp({
         {label:'出售裝備',action:()=>{dialog.show=false;ui.shop=true;shopTab.value='buyback';}},
       ];
     }
+    window._talkToOlin = talkToOlin;
 
     // ─── 消息日誌縮放控制 ───
     function changeMsgLogScale(delta){
